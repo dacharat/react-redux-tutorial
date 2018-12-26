@@ -1,17 +1,15 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import * as serviceWorker from './serviceWorker';
-
-// ReactDOM.render(<App />, document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
 
 // // If you want your app to work offline and load faster, you can change
 // // unregister() to register() below. Note this comes with some pitfalls.
 // // Learn more about service workers: http://bit.ly/CRA-PWA
+// import * as serviceWorker from './serviceWorker';
 // serviceWorker.unregister();
-
-import { createStore, combineReducers, applyMiddleware } from "redux";
 
 const initialState = {
   result: 15000,
@@ -66,7 +64,7 @@ const mylogger = store => next => action => {
 };
 
 const store = createStore(
-  combineReducers({ employeeReducer, userReducer }),
+  combineReducers({ emp: employeeReducer, user: userReducer }),
   {},
   applyMiddleware(mylogger)
 );
@@ -75,22 +73,9 @@ store.subscribe(() => {
   console.log("Update store: ", store.getState());
 });
 
-store.dispatch({
-  type: "ADD",
-  payload: 15000
-});
-
-store.dispatch({
-  type: "setName",
-  payload: "Dacharat"
-});
-
-store.dispatch({
-  type: "ADD",
-  payload: 10000
-});
-
-store.dispatch({
-  type: "setAge",
-  payload: 21
-});
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
