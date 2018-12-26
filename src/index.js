@@ -13,24 +13,30 @@
 
 import { createStore } from "redux";
 
-const reducer = (state, action) => {
+const initialState = {
+  result: 15000,
+  value: []
+}
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD":
-      state += action.payload;
+      state = {
+        result: state.result += action.payload
+      }
       break;
     case "SUBTRACT":
-      state -= action.payload;
       break;
     default:
       break;
   }
   return state;
 };
-const store = createStore(reducer, 15000);
+const store = createStore(reducer);
 store.subscribe(() => {
   console.log("Update store: ", store.getState());
 });
 store.dispatch({
   type: "ADD",
-  payload: 500
+  payload: 15000
 });
